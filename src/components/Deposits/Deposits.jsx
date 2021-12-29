@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Paper from '@material-ui/core/Paper';
 import {
   Chart,
   PieSeries,
