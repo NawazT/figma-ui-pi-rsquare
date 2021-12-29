@@ -1,27 +1,47 @@
 import * as React from 'react';
-import Link from '@mui/material/Link';
-import Typography from '@mui/material/Typography';
-import Title from '../Title/Title';
+import Paper from '@material-ui/core/Paper';
+import {
+  Chart,
+  PieSeries,
+  Title,
+} from '@devexpress/dx-react-chart-material-ui';
+import { Animation } from '@devexpress/dx-react-chart';
 
-function preventDefault(event) {
-  event.preventDefault();
-}
+const data = [
+  { region: 'Asia', val: 4119626293 },
+  { region: 'Africa', val: 1012956064 },
+  { region: 'Northern America', val: 344124520 },
+  
+];
 
-export default function Deposits() {
-  return (
-    <React.Fragment>
-      <Title>Recent Deposits</Title>
-      <Typography component="p" variant="h4">
-        $3,024.00
-      </Typography>
-      <Typography color="text.secondary" sx={{ flex: 1 }}>
-        on 15 March, 2019
-      </Typography>
-      <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          View balance
-        </Link>
-      </div>
-    </React.Fragment>
-  );
+export default class Demo extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data,
+    };
+  }
+
+  render() {
+    const { data: chartData } = this.state;
+
+    return (
+      
+        <Chart
+          data={chartData}
+        >
+          <PieSeries
+            valueField="val"
+            argumentField="region"
+            innerRadius={0.5}
+          />
+          <Title
+            text="Course"
+          />
+          <Animation />
+        </Chart>
+     
+    );
+  }
 }

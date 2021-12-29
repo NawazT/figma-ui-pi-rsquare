@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { styled, createTheme, ThemeProvider, alpha } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
@@ -21,6 +21,9 @@ import { mainListItems } from './listItems';
 import Chart from './Charts/Chart';
 import Deposits from './Deposits/Deposits';
 import Orders from './Orders/Orders';
+import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@mui/material/InputBase';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 function Copyright(props) {
   return (
@@ -89,11 +92,53 @@ function DashboardContent() {
     setOpen(!open);
   };
 
+  const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+      width: 'auto',
+    },
+  }));
+
+  const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }));
+
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      [theme.breakpoints.up('md')]: {
+        width: '20ch',
+      },
+    },
+  }));
+
+  const menuId = 'primary-search-account-menu';
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
+        <AppBar position="absolute" open={open} color='inherit'>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
@@ -111,15 +156,27 @@ function DashboardContent() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography
-              component="h1"
-              variant="h6"
+            
+            <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>
+          <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+             
               color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
             >
-              Dashboard
-            </Typography>
+              <AccountCircle />
+            </IconButton>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
@@ -173,22 +230,45 @@ function DashboardContent() {
                   <Chart />
                 </Paper>
               </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
+              {/* Course */}
+              <Grid item xs={22} md={4} lg={3}>
                 <Paper
                   sx={{
-                    p: 2,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 240,
+                    alignItems: 'flex-start',
+                    padding: '12px',
+
+                    position: 'static',
+                    width: '454px',
+                    height: '374px',
+                    left: 0,
+                    top: 0,
+
+                    backgroundColor: '#FFFFFF',
                   }}
                 >
-                  <Deposits />
+                  <Deposits sx={{
+                      flex: 'none',
+                      order: 0,
+                      flexGrow: 0,
+                      margin: '24px 0',
+                  }}/>
                 </Paper>
               </Grid>
               {/* Recent Orders */}
               <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                <Paper sx={{ 
+                    position: 'static',
+                    width: '454px',
+                    height: '400px',
+                    right: 0,
+                    top: '298px',
+                    bottom: '318px',
+                    
+                    background: '#FFFFFF',
+                    borderRadius: '1x',
+                 }}>
                   <Orders />
                 </Paper>
               </Grid>
